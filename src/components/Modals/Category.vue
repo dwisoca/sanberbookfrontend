@@ -32,6 +32,9 @@ const categoryName = ref()
 async function submit() {
     // Get TOKEN for server to validate login
     const idToken = await store.refreshToken()
+    if(!idToken){
+        return
+    }
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -47,8 +50,8 @@ async function submit() {
     };
     const response = await fetch("http://localhost:5000/categories", requestOptions)
 
-    console.log(response.status)
-    return response.status
+    console.log(response.status, await response.text())
+    return response.status 
 }
 
 </script>

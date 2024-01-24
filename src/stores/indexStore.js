@@ -68,8 +68,14 @@ export const useMainStore = defineStore('main', {
     },
     
     async refreshToken(){
-      const idToken = await authFirebase.currentUser.getIdToken(true)
-      return idToken
+      if (this.user.email != ''){
+        const idToken = await authFirebase.currentUser.getIdToken(true)
+        return idToken
+      } else {
+        console.log('Need Login')
+        this.$router.push('/login')
+        return
+      }
     }
 
   },
