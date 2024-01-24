@@ -7,7 +7,10 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AddCategory: typeof import('./src/components/Modals/AddCategory.vue')['default']
     Category: typeof import('./src/components/Modals/Category.vue')['default']
+    DeleteCategory: typeof import('./src/components/Modals/DeleteCategory.vue')['default']
+    EditCategory: typeof import('./src/components/Modals/EditCategory.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

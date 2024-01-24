@@ -1,25 +1,22 @@
 <template>
-    <!-- Open the modal using ID.showModal() method -->
-    <button class="btn btn-sm btn-outline mt-2" onclick="my_modal_1.showModal()">Category Baru</button>
-    <dialog id="my_modal_1" class="modal">
-    <div class="modal-box">
-        <h3 class="font-bold text-lg">Category</h3>
+<input type="checkbox" id="my_modal_6" class="modal-toggle" />
+<div class="modal" role="dialog">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Edit Category ID: {{ store.categoryToEdit.id }}</h3>
         <div class="space-y-2" >
             <div>
                 <div class="mt-2">
-                    <input type="text" placeholder="Masukkan nama kategori" class="input input-sm input-bordered w-full" v-model="categoryName"/>
+                    <input type="text" placeholder="Masukkan nama kategori yang baru" class="input input-sm input-bordered w-full" v-model="categoryName"/>
                 </div>
             </div>
-
-            <div>
-                <button class="btn btn-primary btn-sm flex w-full no-animation" @click="submit">Simpan</button>
-            </div>
         </div>
+    <div class="modal-action">
+        <label for="my_modal_6" class="btn btn-primary btn-sm flex w-full no-animation" @click="submit">Simpan</label>
     </div>
-    <form method="dialog" class="modal-backdrop">
-        <button >Close</button>
-    </form>
-    </dialog>
+  </div>
+  <label class="modal-backdrop" for="my_modal_6" @click="resetInput()">Close</label>
+
+</div>
 </template>
 
 <script setup>
@@ -43,15 +40,25 @@ async function submit() {
     urlencoded.append("categoryName", categoryName.value);
 
     var requestOptions = {
-      method: 'POST',
+      method: 'PATCH',
       headers: myHeaders,
       body: urlencoded,
       redirect: 'follow'
     };
-    const response = await fetch("http://localhost:5000/categories", requestOptions)
+    const response = await fetch(`http://localhost:5000/categories/${store.categoryToEdit.id}`, requestOptions)
 
     console.log(response.status, await response.text())
+    
+    // Fetch to update recent data
+    await store.fetchCategory()
+    
+    categoryName.value=''
+
     return response.status 
+}
+
+function resetInput(){
+    categoryName.value=''
 }
 
 </script>

@@ -26,11 +26,33 @@ export const useMainStore = defineStore('main', {
         displayName: '',
         uid: '',
       },
+      categoryData: [],
+      categoryToEdit: ''
     }
   },
   getters:{
   },
   actions:{
+
+    async init(){
+      console.log('Init login')
+      onAuthStateChanged(authFirebase, (userData) => {
+        console.log(userData)
+        if (userData) {
+          console.log('Logged in')
+          // User is signed in, 
+          this.user = userData
+        } else {
+          // User is signed out
+          this.user = {
+            email: '',
+            photoURL: '',
+            displayName: '',
+            uid: '',
+          }
+        }
+      });
+    },
 
     async googleLogin(){
       const provider = new GoogleAuthProvider();
@@ -76,7 +98,18 @@ export const useMainStore = defineStore('main', {
         this.$router.push('/login')
         return
       }
-    }
+    },
+
+    async fetchCategory() {
+      var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+      const response = await fetch("http://localhost:5000/categories", requestOptions)
+      const result = await response.text()
+      console.log(JSON.parse(result))
+      this.categoryData = JSON.parse(result)
+  }
 
   },
 

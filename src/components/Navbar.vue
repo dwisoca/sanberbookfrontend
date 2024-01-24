@@ -5,8 +5,8 @@
                 <div class="flex text-xl font-bold">
                     Book Apps
                 </div>
-                <button class="flex justify-center rounded-md px-3 text-sm font-semibold leading-6 border " @click="logout()" v-if="isLogin">Logout</button>
-                <a class="flex justify-center rounded-md bg-indigo-600 px-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 " href="/login" v-if="!isLogin">Login</a>
+                <button class="flex justify-center rounded-md px-3 text-sm font-semibold leading-6 border " @click="logout()" v-if="store.user.uid">Logout</button>
+                <a class="flex justify-center rounded-md bg-indigo-600 px-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 " href="/login" v-else>Login</a>
             </div>
         </div>
     </header>
@@ -14,8 +14,7 @@
 <script setup>
 import { useMainStore } from '@/stores/indexStore.js'
 const store = useMainStore()
-const isLogin = store.user.uid != ''
-console.log(isLogin)
+store.init()
 
 async function logout() {
     console.log('logout')
