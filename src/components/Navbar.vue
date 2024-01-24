@@ -1,5 +1,5 @@
 <template>
-    <header class=" sticky top-0 z-50 backdrop-blur-sm py-5 border-b border-gray-200 -mb-px">
+    <header class="backdrop-blur-sm py-5 border-b border-gray-200 -mb-px">
         <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div class="flex justify-between content-center">    
                 <div class="flex text-xl font-bold">

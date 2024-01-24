@@ -27,7 +27,12 @@ export const useMainStore = defineStore('main', {
         uid: '',
       },
       categoryData: [],
-      categoryToEdit: ''
+      categoryToEdit: '',
+      bookData: [],
+      modal: {
+        addBook: false,
+        addCategory: false
+      }
     }
   },
   getters:{
@@ -109,7 +114,24 @@ export const useMainStore = defineStore('main', {
       const result = await response.text()
       console.log(JSON.parse(result))
       this.categoryData = JSON.parse(result)
-  }
+    },
+
+    async fetchBook(categoryID) {
+      let url
+      if (categoryID){
+        url = `http://localhost:5000/categories/${categoryID}/books`
+      } else {
+        url = `http://localhost:5000/books`
+      }
+      var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+      const response = await fetch(url, requestOptions)
+      const result = await response.text()
+      console.log(JSON.parse(result))
+      this.bookData = JSON.parse(result)
+    }
 
   },
 

@@ -7,8 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AddBook: typeof import('./src/components/Modals/AddBook.vue')['default']
     AddCategory: typeof import('./src/components/Modals/AddCategory.vue')['default']
+    BookList: typeof import('./src/components/BookList.vue')['default']
     Category: typeof import('./src/components/Modals/Category.vue')['default']
+    CategoryList: typeof import('./src/components/CategoryList.vue')['default']
     DeleteCategory: typeof import('./src/components/Modals/DeleteCategory.vue')['default']
     EditCategory: typeof import('./src/components/Modals/EditCategory.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
