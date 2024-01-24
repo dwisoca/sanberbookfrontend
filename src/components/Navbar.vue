@@ -1,0 +1,28 @@
+<template>
+    <header class=" sticky top-0 z-50 backdrop-blur-sm py-5 border-b border-gray-200 -mb-px">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <div class="flex justify-between content-center">    
+                <div class="flex text-xl font-bold">
+                    Book Apps
+                </div>
+                <button class="flex justify-center rounded-md px-3 text-sm font-semibold leading-6 border " @click="logout()" v-if="isLogin">Logout</button>
+                <a class="flex justify-center rounded-md bg-indigo-600 px-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 " href="/login" v-if="!isLogin">Login</a>
+            </div>
+        </div>
+    </header>
+</template>
+<script setup>
+import { useMainStore } from '@/stores/indexStore.js'
+const store = useMainStore()
+const isLogin = store.user.uid != ''
+console.log(isLogin)
+
+async function logout() {
+    console.log('logout')
+    await store.logout()
+}
+</script>
+
+<style lang="scss" scoped>
+
+</style>

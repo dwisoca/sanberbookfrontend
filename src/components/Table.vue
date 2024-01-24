@@ -1,4 +1,7 @@
 <template>
+    <button class="flex justify-center rounded-md bg-indigo-600 px-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500" @click="getToken()" >Test POST</button>
+    <Category/>
+
     <ul role="list" class="divide-y divide-gray-100">
       <li v-for="person in people" :key="person.email" class="flex justify-between gap-x-6 py-5">
         <div class="flex min-w-0 gap-x-4">
@@ -25,6 +28,31 @@
   </template>
   
 <script setup>
+import { useMainStore } from '@/stores/indexStore.js'
+const store = useMainStore()
+
+async function getToken() {
+    // Get TOKEN for server to validate login
+    const idToken = await store.refreshToken()
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("token", idToken);
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: 'follow'
+    };
+    const response = await fetch("http://localhost:5000/categories", requestOptions)
+    // .then(response => response.text())
+    // .then(result => console.log(result))
+    // .catch(error => console.log('error', error));
+
+    console.log(response.status)
+}
+
 const people = [
 {
     name: 'Leslie Alexander',

@@ -25,13 +25,7 @@ export const useMainStore = defineStore('main', {
         photoURL: '',
         displayName: '',
         uid: '',
-        isAdmin: false
       },
-      currentPage : 1,
-      limitPerPage: 5,
-      daftarUsulan: [],
-      jumlahSelesai: 0,
-      alertModal: false
     }
   },
   getters:{
@@ -66,13 +60,17 @@ export const useMainStore = defineStore('main', {
           photoURL: '',
           displayName: '',
           uid: '',
-          isAdmin: false,
         }
-        navigateTo('/')
+        this.$router.push('/login')
       }).catch((error) => {
         // An error happened.
       });
     },
+    
+    async refreshToken(){
+      const idToken = await authFirebase.currentUser.getIdToken(true)
+      return idToken
+    }
 
   },
 
