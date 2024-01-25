@@ -17,7 +17,7 @@
                     <label class="text-xs">Harga</label>
                     <input type="text" placeholder="Masukkan harga" class="input input-sm input-bordered w-full" v-model="bookData.price"/>
                     <label class="text-xs">Jumlah Halaman</label>
-                    <input type="text" placeholder="Masukkan total halaman" class="input input-sm input-bordered w-full" v-model="bookData.total_page"/>
+                    <input type="number" placeholder="Masukkan total halaman" class="input input-sm input-bordered w-full" v-model="bookData.total_page"/>
                     <label class="text-xs">Kategori</label>
                     <select class="select select-bordered select-sm w-full " v-model="bookData.category_id">
                         <option disabled selected>Pilih kategori</option>

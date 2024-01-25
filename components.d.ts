@@ -11,7 +11,6 @@ declare module 'vue' {
     AddCategory: typeof import('./src/components/Modals/AddCategory.vue')['default']
     BookList: typeof import('./src/components/BookList.vue')['default']
     CategoryList: typeof import('./src/components/CategoryList.vue')['default']
-    copy: typeof import('./src/components/Modals/EditCategory copy.vue')['default']
     DeleteBook: typeof import('./src/components/Modals/DeleteBook.vue')['default']
     DeleteCategory: typeof import('./src/components/Modals/DeleteCategory.vue')['default']
     EditBook: typeof import('./src/components/Modals/EditBook.vue')['default']
