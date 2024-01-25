@@ -7,7 +7,7 @@
     <p class="font-bold text-lg">List Book</p>
     <p class="mt-2 text-sm italic text-red-400" v-if="store.bookData.length <= 0">Tidak ada buku ditemukan</p>
     </div>
-    
+    <FilterBook/>
     <div class="overflow-x-auto">
         <table class="table table-xs">
             <!-- head -->

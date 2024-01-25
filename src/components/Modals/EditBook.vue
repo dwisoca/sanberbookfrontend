@@ -59,6 +59,10 @@ async function submit() {
         alert('Tahun terbit tidak sesuai')
         return
     }
+    if (store.bookToEdit.category_id == 'Pilih kategori' || store.bookToEdit.category_id == ''){
+        alert('Category belum dipilih')
+        return
+    }
     isLoading.value = true
     // Get TOKEN for server to validate login
     const idToken = await store.refreshToken()

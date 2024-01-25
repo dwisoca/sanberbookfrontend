@@ -5,13 +5,20 @@
         <div class="space-y-6" >
             <div>
                 <div class="mt-2 space-y-2">
+                    <label class="text-xs">Judul</label>
                     <input type="text" placeholder="Masukkan judul" class="input input-sm input-bordered w-full" v-model="bookData.title"/>
+                    <label class="text-xs">Deskripsi</label>
                     <input type="text" placeholder="Masukkan deskripsi" class="input input-sm input-bordered w-full" v-model="bookData.description"/>
+                    <label class="text-xs">URL Image</label>
                     <input type="text" placeholder="Masukkan url cover" class="input input-sm input-bordered w-full" v-model="bookData.image"/>
+                    <label class="text-xs">Tahun Terbit</label>
                     <input type="number" placeholder="Masukkan tahun terbit" class="input input-sm input-bordered w-full" v-model="bookData.release_year"/>
                     <p class="ml-1 text-xs italic text-red-400" v-if="!isValidYear">*Tahun terbit dibatasi 1980 - 2021</p>
+                    <label class="text-xs">Harga</label>
                     <input type="text" placeholder="Masukkan harga" class="input input-sm input-bordered w-full" v-model="bookData.price"/>
+                    <label class="text-xs">Jumlah Halaman</label>
                     <input type="text" placeholder="Masukkan total halaman" class="input input-sm input-bordered w-full" v-model="bookData.total_page"/>
+                    <label class="text-xs">Kategori</label>
                     <select class="select select-bordered select-sm w-full " v-model="bookData.category_id">
                         <option disabled selected>Pilih kategori</option>
                         <option v-for="category in store.categoryData" :value="category.id">{{ category.name }}</option>
@@ -61,7 +68,15 @@ const isValidYear = computed(()=>{
 })
 
 async function submit() {
-    console.log(bookData.value)
+    if (!isValidYear.value){
+        alert('Tahun terbit tidak sesuai')
+        return
+    }
+    if (bookData.value.category_id == 'Pilih kategori' || bookData.value.category_id == ''){
+        alert('Category belum dipilih')
+        return
+    }
+
     isLoading.value = true
     // Get TOKEN for server to validate login
     const idToken = await store.refreshToken()

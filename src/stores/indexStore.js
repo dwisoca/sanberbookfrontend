@@ -33,6 +33,14 @@ export const useMainStore = defineStore('main', {
       modal: {
         addBook: false,
         addCategory: false
+      },
+      filter: {
+        title: '',
+        minYear: '',
+        maxYear: '',
+        minPage: '',
+        maxPage: '',
+        sortByTitle: ''
       }
     }
   },
@@ -120,15 +128,35 @@ export const useMainStore = defineStore('main', {
     async fetchBook(categoryID) {
       let url
       if (categoryID){
-        url = `http://localhost:5000/categories/${categoryID}/books`
+        url = `http://localhost:5000/categories/${categoryID}/books/`
       } else {
-        url = `http://localhost:5000/books`
+        url = `http://localhost:5000/books/`
       }
       var requestOptions = {
         method: 'GET',
         redirect: 'follow'
       };
-      const response = await fetch(url, requestOptions)
+
+      function hasValueInFilter(filter) {
+        for (const key in filter) {
+          if (filter.hasOwnProperty(key) && filter[key] !== '') {
+            return true;
+          }
+        }
+        return false;
+      }
+      const isFilterActive = hasValueInFilter(this.filter)
+      console.log('filter ', isFilterActive)
+
+      let response
+      if (isFilterActive){
+        response = await fetch(url + '?' + new URLSearchParams(
+          this.filter
+        ), requestOptions)
+      } else {
+        response = await fetch(url, requestOptions)
+      }
+
       const result = await response.text()
       console.log(JSON.parse(result))
       this.bookData = JSON.parse(result)
