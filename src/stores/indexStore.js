@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 // Firebase
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 const firebaseConfig = {
   apiKey: "AIzaSyAzwh3PsOPieiSNKHJHiK7_QJQrvy17aCY",
   authDomain: "cakra-stopbullying.firebaseapp.com",
@@ -100,6 +100,41 @@ export const useMainStore = defineStore('main', {
         this.$router.push('/login')
       }).catch((error) => {
         // An error happened.
+      });
+    },
+
+    async register(user){
+      createUserWithEmailAndPassword(authFirebase, user.email, user.password)
+      .then((userCredential) => {
+        // Signed up 
+        const user = userCredential.user;
+        console.log(user)
+        this.user = user
+        this.$router.push('/')
+        
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+    
+    },
+
+    async loginEmail(user){
+      signInWithEmailAndPassword(authFirebase, user.email, user.password)
+      .then((userCredential) => {
+        // Signed up 
+        const user = userCredential.user;
+        console.log(user)
+        this.user = user
+        this.$router.push('/')
+        
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
       });
     },
     

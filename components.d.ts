@@ -11,6 +11,7 @@ declare module 'vue' {
     AddCategory: typeof import('./src/components/Modals/AddCategory.vue')['default']
     BookList: typeof import('./src/components/BookList.vue')['default']
     CategoryList: typeof import('./src/components/CategoryList.vue')['default']
+    copy: typeof import('./src/components/Login copy.vue')['default']
     DeleteBook: typeof import('./src/components/Modals/DeleteBook.vue')['default']
     DeleteCategory: typeof import('./src/components/Modals/DeleteCategory.vue')['default']
     EditBook: typeof import('./src/components/Modals/EditBook.vue')['default']
@@ -19,6 +20,7 @@ declare module 'vue' {
     ImageBook: typeof import('./src/components/Modals/ImageBook.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
+    Register: typeof import('./src/components/Register.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
