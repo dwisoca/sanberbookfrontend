@@ -3,7 +3,7 @@
   <AddCategory/>
   <EditCategory/>
   <DeleteCategory/>
-  <p class="mt-4">List Category</p>
+  <p class="font-bold text-lg">List Category</p>
   <li v-for="category in store.categoryData" :key="category.email" class="flex justify-between gap-x-6 py-2">
     <div class="flex min-w-0 gap-x-4">
       <div class="min-w-0 flex-auto">

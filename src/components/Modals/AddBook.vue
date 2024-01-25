@@ -9,11 +9,12 @@
                     <input type="text" placeholder="Masukkan deskripsi" class="input input-sm input-bordered w-full" v-model="bookData.description"/>
                     <input type="text" placeholder="Masukkan url cover" class="input input-sm input-bordered w-full" v-model="bookData.image"/>
                     <input type="number" placeholder="Masukkan tahun terbit" class="input input-sm input-bordered w-full" v-model="bookData.release_year"/>
+                    <p class="ml-1 text-xs italic text-red-400" v-if="!isValidYear">*Tahun terbit dibatasi 1980 - 2021</p>
                     <input type="text" placeholder="Masukkan harga" class="input input-sm input-bordered w-full" v-model="bookData.price"/>
                     <input type="text" placeholder="Masukkan total halaman" class="input input-sm input-bordered w-full" v-model="bookData.total_page"/>
                     <select class="select select-bordered select-sm w-full " v-model="bookData.category_id">
                         <option disabled selected>Pilih kategori</option>
-                        <option v-for="category in store.categoryData" >{{ category.name }}</option>
+                        <option v-for="category in store.categoryData" :value="category.id">{{ category.name }}</option>
                     </select>
                 </div>
             </div>
@@ -48,7 +49,19 @@ const bookData = ref({
 })
 const isLoading = ref()
 
+const isValidYear = computed(()=>{
+    const minYear = 1980;
+    const maxYear = 2021;
+
+    if (Number.isInteger(bookData.value.release_year) && bookData.value.release_year >= minYear && bookData.value.release_year <= maxYear) {
+        return true; 
+    } else {
+        return false; 
+    }
+})
+
 async function submit() {
+    console.log(bookData.value)
     isLoading.value = true
     // Get TOKEN for server to validate login
     const idToken = await store.refreshToken()
@@ -61,7 +74,7 @@ async function submit() {
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     var urlencoded = new URLSearchParams();
     urlencoded.append("token", idToken);
-    urlencoded.append("categoryName", categoryName.value);
+    urlencoded.append("bookData", JSON.stringify(bookData.value));
 
     var requestOptions = {
       method: 'POST',
@@ -69,32 +82,26 @@ async function submit() {
       body: urlencoded,
       redirect: 'follow'
     };
-    const response = await fetch("http://localhost:5000/categories", requestOptions)
+    const response = await fetch("http://localhost:5000/books", requestOptions)
     isLoading.value = false
 
     console.log(response.status, await response.text())
     // Fetch to update recent data
-    await store.fetchCategory()
+    await store.fetchBook()
 
-    categoryName.value = ''
+    bookData.value = {
+        title: '',
+        description: '',
+        image: '',
+        release_year: '',
+        price: '',
+        total_page: '',
+        category_id: 'Pilih kategori',
+    }
 
     return response.status 
 }
-// const data = {
-//     // user input
-//     title: bookData.title,
-//     description: bookData.description,
-//     image: bookData.image,
-//     release_year: bookData.releaseYear,
-//     price: bookData.price,
-//     total_page: bookData.totalPage,
-//     category_id: bookData.categoryID,
-//     // system input
-//     id: bookID,
-//     thickness: getThickness(bookData.totalPage),
-//     created_at: FieldValue.serverTimestamp(),
-//     updated_at: FieldValue.serverTimestamp(),
-//   }
+
 </script>
 
 <style lang="scss" scoped>

@@ -29,6 +29,7 @@ export const useMainStore = defineStore('main', {
       categoryData: [],
       categoryToEdit: '',
       bookData: [],
+      bookToEdit: '',
       modal: {
         addBook: false,
         addCategory: false
